@@ -1,6 +1,6 @@
 # Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group
-resource "aws_security_group" "dev_bastion_sg" {
-  name = "dev_bastion_sg"
+resource "aws_security_group" "dev_ssh_sg" {
+  name = "dev_ssh_sg"
   vpc_id = aws_vpc.dev_vpc.id
   ingress {
     from_port   = 22
@@ -20,7 +20,7 @@ resource "aws_security_group" "dev_bastion_sg" {
 # Resource: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance#example-usage
 resource "aws_instance" "bastion-redis-client" {
   subnet_id = aws_subnet.dev_public_subnets_001.id
-  vpc_security_group_ids = [aws_security_group.dev_bastion_sg.id]
+  vpc_security_group_ids = [aws_security_group.dev_ssh_sg.id]
   key_name      = data.aws_key_pair.my_key.key_name
 
   ami           = var.ami_id
